@@ -34,10 +34,10 @@ public class DynamicUnbakedModel implements UnbakedModel {
     }
 
     @Override
-    public @Nullable BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
+    public @Nullable BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
         BakedModel[] baked = new BakedModel[models.length];
         for (int i = 0; i < models.length; i++) {
-            baked[i] = baker.getOrLoadModel(models[i]).bake(baker, textureGetter, rotationContainer, models[i]);
+            baked[i] = baker.getOrLoadModel(models[i]).bake(baker, textureGetter, rotationContainer);
         }
         return new DynamicBakedModel(baked, selector, effects);
     }

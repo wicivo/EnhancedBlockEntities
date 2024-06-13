@@ -4,6 +4,7 @@ import foundationgames.enhancedblockentities.EnhancedBlockEntities;
 import foundationgames.enhancedblockentities.config.EBEConfig;
 import foundationgames.enhancedblockentities.util.EBEUtil;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.minecraft.block.DecoratedPotPattern;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.DyeColor;
@@ -75,7 +76,7 @@ public final class ModelIdentifiers implements ModelLoadingPlugin {
     public static final Map<DyeColor, Identifier> SHULKER_BOX_BOTTOMS = new HashMap<>();
     public static final Map<DyeColor, Identifier> SHULKER_BOX_LIDS = new HashMap<>();
 
-    public static final Map<RegistryKey<String>, Identifier[]> POTTERY_PATTERNS = new HashMap<>();
+    public static final Map<RegistryKey<DecoratedPotPattern>, Identifier[]> POTTERY_PATTERNS = new HashMap<>();
 
     static {
         for (DyeColor color : EBEUtil.DEFAULTED_DYE_COLORS) {
@@ -98,7 +99,7 @@ public final class ModelIdentifiers implements ModelLoadingPlugin {
         // The order decorated pots store patterns per face
         Direction[] orderedHorizontalDirs = new Direction[] {Direction.NORTH, Direction.WEST, Direction.EAST, Direction.SOUTH};
 
-        for (RegistryKey<String> patternKey : Registries.DECORATED_POT_PATTERN.getKeys()) {
+        for (var patternKey : Registries.DECORATED_POT_PATTERN.getKeys()) {
             var pattern = patternKey.getValue().getPath();
             var ids = new Identifier[orderedHorizontalDirs.length];;
 
@@ -112,7 +113,7 @@ public final class ModelIdentifiers implements ModelLoadingPlugin {
     }
 
     private static Identifier of(String id, Predicate<EBEConfig> condition) {
-        Identifier idf = new Identifier(id);
+        Identifier idf = Identifier.of(id);
         modelLoaders.computeIfAbsent(condition, k -> new HashSet<>()).add(idf);
         return idf;
     }

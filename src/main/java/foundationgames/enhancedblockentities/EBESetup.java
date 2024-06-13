@@ -17,8 +17,8 @@ import foundationgames.enhancedblockentities.client.resource.EBEPack;
 import foundationgames.enhancedblockentities.util.DateUtil;
 import foundationgames.enhancedblockentities.util.EBEUtil;
 import foundationgames.enhancedblockentities.util.ResourceUtil;
-import foundationgames.enhancedblockentities.util.duck.BakedModelManagerAccess;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -30,7 +30,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -56,9 +55,9 @@ public enum EBESetup {;
         ResourceUtil.addDoubleChestModels("christmas_left", "christmas_right","christmas_chest", p);
         ResourceUtil.addSingleChestModels("ender", "ender_chest", p);
 
-        ResourceUtil.addChestItemModel(new Identifier("models/item/chest.json"), "chest_center", p);
-        ResourceUtil.addChestItemModel(new Identifier("models/item/trapped_chest.json"), "trapped_chest_center", p);
-        ResourceUtil.addParentModel("block/ender_chest_center", new Identifier("item/ender_chest"), p);
+        ResourceUtil.addChestItemModel(Identifier.of("models/item/chest.json"), "chest_center", p);
+        ResourceUtil.addChestItemModel(Identifier.of("models/item/trapped_chest.json"), "trapped_chest_center", p);
+        ResourceUtil.addParentModel("block/ender_chest_center", Identifier.of("item/ender_chest"), p);
 
         p.addDirBlockSprites("entity/chest", "entity/chest/");
     }
@@ -112,7 +111,7 @@ public enum EBESetup {;
     public static void setupRRPBells() {
         ResourceUtil.addBellBlockState(ResourceUtil.getPackForCompat());
 
-        ResourceUtil.getBasePack().addSingleBlockSprite(new Identifier("entity/bell/bell_body"));
+        ResourceUtil.getBasePack().addSingleBlockSprite(Identifier.of("entity/bell/bell_body"));
     }
 
     public static void setupRRPBeds() {
@@ -135,7 +134,7 @@ public enum EBESetup {;
             var id = color != null ? color.getName()+"_shulker_box" : "shulker_box";
             ResourceUtil.addShulkerBoxBlockStates(color, pCompat);
             ResourceUtil.addShulkerBoxModels(color, p);
-            ResourceUtil.addParentModel("block/"+id, new Identifier("item/"+id), p);
+            ResourceUtil.addParentModel("block/"+id, Identifier.of("item/"+id), p);
         }
 
         p.addDirBlockSprites("entity/shulker", "entity/shulker/");
@@ -146,7 +145,7 @@ public enum EBESetup {;
         EBEPack pCompat = ResourceUtil.getPackForCompat();
 
         ResourceUtil.addDecoratedPotBlockState(pCompat);
-        for (RegistryKey<String> patternKey : Registries.DECORATED_POT_PATTERN.getKeys()) {
+        for (var patternKey : Registries.DECORATED_POT_PATTERN.getKeys()) {
             ResourceUtil.addDecoratedPotPatternModels(patternKey, p);
         }
 
@@ -155,7 +154,7 @@ public enum EBESetup {;
 
     public static void setupResourceProviders() {
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "chest_center"),
+                Identifier.of("builtin", "chest_center"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.CHEST_CENTER,
@@ -168,7 +167,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "chest_left"),
+                Identifier.of("builtin", "chest_left"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.CHEST_LEFT,
@@ -182,7 +181,7 @@ public enum EBESetup {;
         ));
 
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "chest_right"),
+                Identifier.of("builtin", "chest_right"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.CHEST_RIGHT,
@@ -195,7 +194,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "trapped_chest_center"),
+                Identifier.of("builtin", "trapped_chest_center"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.TRAPPED_CHEST_CENTER,
@@ -208,7 +207,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "trapped_chest_left"),
+                Identifier.of("builtin", "trapped_chest_left"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.TRAPPED_CHEST_LEFT,
@@ -221,7 +220,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "trapped_chest_right"),
+                Identifier.of("builtin", "trapped_chest_right"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.TRAPPED_CHEST_RIGHT,
@@ -234,7 +233,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "ender_chest_center"),
+                Identifier.of("builtin", "ender_chest_center"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.ENDER_CHEST_CENTER,
@@ -246,7 +245,7 @@ public enum EBESetup {;
         ));
 
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "bell_between_walls"),
+                Identifier.of("builtin", "bell_between_walls"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.BELL_BETWEEN_WALLS_WITH_BELL,
@@ -257,7 +256,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "bell_ceiling"),
+                Identifier.of("builtin", "bell_ceiling"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.BELL_CEILING_WITH_BELL,
@@ -268,7 +267,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "bell_floor"),
+                Identifier.of("builtin", "bell_floor"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.BELL_FLOOR_WITH_BELL,
@@ -279,7 +278,7 @@ public enum EBESetup {;
                 )
         ));
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "bell_wall"),
+                Identifier.of("builtin", "bell_wall"),
                 () -> new DynamicUnbakedModel(
                         new Identifier[] {
                                 ModelIdentifiers.BELL_WALL_WITH_BELL,
@@ -291,7 +290,7 @@ public enum EBESetup {;
         ));
         for (DyeColor color : EBEUtil.DEFAULTED_DYE_COLORS) {
             ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                    new Identifier("builtin", color != null ? color.getName()+"_shulker_box" : "shulker_box"),
+                    Identifier.of("builtin", color != null ? color.getName()+"_shulker_box" : "shulker_box"),
                     () -> new DynamicUnbakedModel(
                             new Identifier[] {
                                     ModelIdentifiers.SHULKER_BOXES.get(color),
@@ -305,7 +304,7 @@ public enum EBESetup {;
 
         DecoratedPotModelSelector decoratedPotSelector = new DecoratedPotModelSelector();
         ModelLoadingPlugin.register(new DynamicModelProvidingPlugin(
-                new Identifier("builtin", "decorated_pot"),
+                Identifier.of("builtin", "decorated_pot"),
                 () -> new DynamicUnbakedModel(
                         decoratedPotSelector.createModelIDs(),
                         decoratedPotSelector,
@@ -326,34 +325,34 @@ public enum EBESetup {;
         };
         EnhancedBlockEntityRegistry.register(Blocks.CHEST, BlockEntityType.CHEST, BlockEntityRenderCondition.CHEST,
                 new ChestBlockEntityRendererOverride(() -> {
-                    BakedModelManagerAccess manager = (BakedModelManagerAccess) MinecraftClient.getInstance().getBakedModelManager();
+                    FabricBakedModelManager manager =  MinecraftClient.getInstance().getBakedModelManager();
                     return new BakedModel[] {
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHEST_CENTER_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHEST_LEFT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHEST_RIGHT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_CENTER_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_LEFT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_RIGHT_LID)
+                            manager.getModel(ModelIdentifiers.CHEST_CENTER_LID),
+                            manager.getModel(ModelIdentifiers.CHEST_LEFT_LID),
+                            manager.getModel(ModelIdentifiers.CHEST_RIGHT_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_CENTER_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_LEFT_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_RIGHT_LID)
                     };
                 }, christmasChestSelector)
         );
         EnhancedBlockEntityRegistry.register(Blocks.TRAPPED_CHEST, BlockEntityType.TRAPPED_CHEST, BlockEntityRenderCondition.CHEST,
                 new ChestBlockEntityRendererOverride(() -> {
-                    BakedModelManagerAccess manager = (BakedModelManagerAccess)MinecraftClient.getInstance().getBakedModelManager();
+                    FabricBakedModelManager manager = MinecraftClient.getInstance().getBakedModelManager();
                     return new BakedModel[] {
-                            manager.enhanced_bes$getModel(ModelIdentifiers.TRAPPED_CHEST_CENTER_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.TRAPPED_CHEST_LEFT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.TRAPPED_CHEST_RIGHT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_CENTER_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_LEFT_LID),
-                            manager.enhanced_bes$getModel(ModelIdentifiers.CHRISTMAS_CHEST_RIGHT_LID)
+                            manager.getModel(ModelIdentifiers.TRAPPED_CHEST_CENTER_LID),
+                            manager.getModel(ModelIdentifiers.TRAPPED_CHEST_LEFT_LID),
+                            manager.getModel(ModelIdentifiers.TRAPPED_CHEST_RIGHT_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_CENTER_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_LEFT_LID),
+                            manager.getModel(ModelIdentifiers.CHRISTMAS_CHEST_RIGHT_LID)
                     };
                 }, christmasChestSelector)
         );
         EnhancedBlockEntityRegistry.register(Blocks.ENDER_CHEST, BlockEntityType.ENDER_CHEST, BlockEntityRenderCondition.CHEST,
                 new ChestBlockEntityRendererOverride(() -> {
-                    BakedModelManagerAccess manager = (BakedModelManagerAccess)MinecraftClient.getInstance().getBakedModelManager();
-                    return new BakedModel[] { manager.enhanced_bes$getModel(ModelIdentifiers.ENDER_CHEST_CENTER_LID) };
+                    FabricBakedModelManager manager = MinecraftClient.getInstance().getBakedModelManager();
+                    return new BakedModel[] { manager.getModel(ModelIdentifiers.ENDER_CHEST_CENTER_LID) };
                 }, entity -> 0)
         );
     }
@@ -428,9 +427,9 @@ public enum EBESetup {;
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
             EnhancedBlockEntityRegistry.register(block, BlockEntityType.SHULKER_BOX, BlockEntityRenderCondition.SHULKER_BOX,
                     new ShulkerBoxBlockEntityRendererOverride((map) -> {
-                        var models = (BakedModelManagerAccess) MinecraftClient.getInstance().getBakedModelManager();
+                        var models =  MinecraftClient.getInstance().getBakedModelManager();
                         for (DyeColor dc : EBEUtil.DEFAULTED_DYE_COLORS) {
-                            map.put(dc, models.enhanced_bes$getModel(ModelIdentifiers.SHULKER_BOX_LIDS.get(dc)));
+                            map.put(dc, models.getModel(ModelIdentifiers.SHULKER_BOX_LIDS.get(dc)));
                         }
                     })
             );

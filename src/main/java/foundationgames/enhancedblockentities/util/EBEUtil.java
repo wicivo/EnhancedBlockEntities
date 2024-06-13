@@ -52,7 +52,7 @@ public enum EBEUtil {;
     }
 
     public static Identifier id(String path) {
-        return new Identifier(EnhancedBlockEntities.NAMESPACE, path);
+        return Identifier.of(EnhancedBlockEntities.NAMESPACE, path);
     }
 
     public static final String DUMP_FOLDER_NAME = "enhanced_bes_dump";
